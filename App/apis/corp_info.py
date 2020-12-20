@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, jsonify
 from App.models.corp_info import CorpInfo
 
@@ -15,14 +17,22 @@ def addCorp():
 
 @blue.route('/corp', methods=['GET'])
 def corp_list():
-    res = CorpInfo.query.all()
+    corp_list = CorpInfo.query.all()
     data = []
-    for item in res:
+    res = {}  # 返回一个字典，包含状态码，信息，数据
+    for item in corp_list:
         data.append(item.to_json())
-    return jsonify(data)
+    res['status'] = 200
+    res['msg'] = '请求成功'
+    res['data'] = data
+    return jsonify(res)
 
 
 @blue.route('/corp/<id>', methods=['GET'])
 def corp_by_id(id):
-    res = CorpInfo.query.filter_by(id=id).first()
-    return jsonify(res.to_json())
+    corp = CorpInfo.query.filter_by(id=id).first()
+    res = {}
+    res['status'] = 200
+    res['msg'] = '请求成功'
+    res['data'] = corp.to_json()
+    return jsonify(res)
