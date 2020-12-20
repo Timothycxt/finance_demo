@@ -4,10 +4,10 @@ from flask import Blueprint, jsonify
 from App.models.corp_info import CorpInfo
 
 # （蓝图的名字，导入的名字）
-blue = Blueprint('blue', __name__)
+corp_info = Blueprint('corp_info', __name__)
 
 
-@blue.route('/corp/add', methods=['POST'])
+@corp_info.route('/corp/add', methods=['POST'])
 def addCorp():
     corpInfo = CorpInfo()
     corpInfo.name = "test"
@@ -15,7 +15,7 @@ def addCorp():
     return 'res'
 
 
-@blue.route('/corp', methods=['GET'])
+@corp_info.route('/corp', methods=['GET'])
 def corp_list():
     corp_list = CorpInfo.query.all()
     data = []
@@ -28,7 +28,7 @@ def corp_list():
     return jsonify(res)
 
 
-@blue.route('/corp/<id>', methods=['GET'])
+@corp_info.route('/corp/<id>', methods=['GET'])
 def corp_by_id(id):
     corp = CorpInfo.query.filter_by(id=id).first()
     res = {}
