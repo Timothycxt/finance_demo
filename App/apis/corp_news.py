@@ -28,7 +28,7 @@ def corp_by_name(corporation):
         data.append(corp_new.to_json())
     res['status'] = 200
     res['msg'] = '请求成功'
-    res['data'] = corp_news.to_json()
+    res['data'] = data
     return jsonify(res)
 
 
