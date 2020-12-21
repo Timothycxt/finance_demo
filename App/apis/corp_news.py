@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify
+
+from App.models import simu_cacu
 from App.models.corp_news import CorpNews
 
 # （蓝图的名字，导入的名字）
@@ -21,4 +23,14 @@ def corp_by_id(id):
     res['status'] = 200
     res['msg'] = '请求成功'
     res['data'] = corp_news.to_json()
+    return jsonify(res)
+
+
+@corp_news.route('/corp_news/simu', method=['GET'])
+def corp_news_simu():
+    simu = simu_cacu.getData()
+    res = {}
+    res['status'] = 200
+    res['msg'] = '请求成功'
+    res['data'] = simu
     return jsonify(res)
