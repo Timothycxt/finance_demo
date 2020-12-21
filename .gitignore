@@ -1,2 +1,3 @@
 /.idea/ 
 /App/__pycache__/
+*.pyc
