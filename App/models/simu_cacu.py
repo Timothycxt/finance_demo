@@ -5,10 +5,10 @@ import codecs
 
 from App.extensions import db
 from App.models.corp_news import CorpNews
-from manager import app
 
 
 def corp_news_list():
+    from manager import app
     app_context = app.app_context()
     app_context.push()
     res = db.session.query(CorpNews.title, CorpNews.corporation, CorpNews.publish_date).all()
@@ -16,6 +16,7 @@ def corp_news_list():
     for item in res:
         # print(type(item), str(item[0]), str(item[1]), str(item[2]))
         data.append([str(item[0]), str(item[1]), item[2]])
+    app_context.pop()
     return data
 
 
@@ -128,7 +129,7 @@ def caculate(words, dictionary, doc_vectors):
 
         # 使用TF-IDF模型计算相似度
         TF_list = TF_IDF(tfidf_vectors, news_bow)
-        print("TF_IDF:", TF_list, '\n')
+        # print("TF_IDF:", TF_list, '\n')
         # 取相似度最高的事件类
         event = 0
         reliability = 0
@@ -167,7 +168,7 @@ def bulid():
     dictionary, doc_vectors = event_bow()
     # 读取原始语料、停用词表
     news = corp_news_list()
-    stopwords = read_stop_word("stopwords.txt")
+    stopwords = read_stop_word("App/models/stopwords.txt")
     all_words = cut_words(news, stopwords)
     TF_list = []
     for words in all_words:
@@ -192,7 +193,7 @@ def analysis():
     TF_list = bulid()  # 语义匹配数据
     event_set = set()  # 事件set
     for item in TF_list:
-        print(item)
+        # print(item)
         len_before = len(event_set)
         string = str(item[1]) + str(item[2]) + str(item[3])
         event_set.add(string)
@@ -207,7 +208,7 @@ def analysis():
             score = int(corporation[item[1]]) - 5  # 不同时间不同事件扣5分，后续根据事件严重程度按事件严重性扣分
             corporation.pop(item[1])
             corporation[item[1]] = score
-    print(corporation)
+    # print(corporation)
     # ######################################################
     # with open("企业得分.txt", 'a', encoding="utf8") as f:
     #     for i in corporation:

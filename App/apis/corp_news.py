@@ -32,7 +32,7 @@ def corp_by_name(corporation):
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/simu', method=['GET'])
+@corp_news.route('/corp_news/simu', methods=['GET'])
 def corp_news_simu():
     simu = simu_cacu.getData()
     res = {}
