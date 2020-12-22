@@ -48,7 +48,11 @@ def corp_news_numbers(corporation):
     count_positive=CorpNews.query.filter(CorpNews.corporation==corporation,CorpNews.emotion_trend==1).count()
     count_middle=CorpNews.query.filter(CorpNews.corporation==corporation,CorpNews.emotion_trend==0).count()
     count_negative=CorpNews.query.filter(CorpNews.corporation==corporation,CorpNews.emotion_trend==-1).count()
-    data=[count_positive,count_middle,count_negative]
+    data={
+        'count_positive':count_positive,
+        'count_middle':count_middle,
+        'count_negative':count_negative
+    }
     res={}
     res['status']=200
     res['msg']='请求成功'
