@@ -1,3 +1,4 @@
 /.idea/ 
 /App/__pycache__/
+/.vscode
 *.pyc
