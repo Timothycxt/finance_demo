@@ -2,7 +2,6 @@ import datetime
 import jieba
 from gensim import corpora, models, similarities
 import codecs
-import sys
 
 from App.extensions import db
 from App.models.corp_news import CorpNews
@@ -96,7 +95,6 @@ def drop_Disable_Words(cut_res, stopwords):
 # 读取停用词
 def read_stop_word(file_path):
     file = file_path
-
     stopwords = codecs.open(file, 'r', encoding='utf8').readlines()
     stopwords = [w.strip() for w in stopwords]
     return stopwords
@@ -131,7 +129,7 @@ def caculate(words, dictionary, doc_vectors):
 
         # 使用TF-IDF模型计算相似度
         TF_list = TF_IDF(tfidf_vectors, news_bow)
-        print("TF_IDF:", TF_list, '\n')
+        # print("TF_IDF:", TF_list, '\n')
         # 取相似度最高的事件类
         event = 0
         reliability = 0
@@ -170,7 +168,7 @@ def bulid():
     dictionary, doc_vectors = event_bow()
     # 读取原始语料、停用词表
     news = corp_news_list()
-    stopwords = read_stop_word("D:\\Git\\finance_demo\\App\\models\\stopwords.txt")
+    stopwords = read_stop_word("App/models/stopwords.txt")
     all_words = cut_words(news, stopwords)
     TF_list = []
     for words in all_words:
@@ -195,7 +193,7 @@ def analysis():
     TF_list = bulid()  # 语义匹配数据
     event_set = set()  # 事件set
     for item in TF_list:
-        print(item)
+        # print(item)
         len_before = len(event_set)
         string = str(item[1]) + str(item[2]) + str(item[3])
         event_set.add(string)
@@ -210,7 +208,7 @@ def analysis():
             score = int(corporation[item[1]]) - 5  # 不同时间不同事件扣5分，后续根据事件严重程度按事件严重性扣分
             corporation.pop(item[1])
             corporation[item[1]] = score
-    print(corporation)
+    # print(corporation)
     # ######################################################
     # with open("企业得分.txt", 'a', encoding="utf8") as f:
     #     for i in corporation:
