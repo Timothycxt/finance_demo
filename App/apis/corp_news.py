@@ -43,14 +43,14 @@ def corp_news_simu():
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/numbers/<corporation>',methods=['GET'])
+@corp_news.route('/corp_news/numbers/<corporation>', methods=['GET'])
 def corp_news_numbers(corporation):
-    count_positive=CorpNews.query.filter(CorpNews.corporation==corporation,CorpNews.emotion_trend==1).count()
-    count_middle=CorpNews.query.filter(CorpNews.corporation==corporation,CorpNews.emotion_trend==0).count()
-    count_negative=CorpNews.query.filter(CorpNews.corporation==corporation,CorpNews.emotion_trend==-1).count()
-    data=[count_positive,count_middle,count_negative]
-    res={}
-    res['status']=200
-    res['msg']='请求成功'
-    res['data']=data
+    count_positive = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend==1).count()
+    count_middle = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend==0).count()
+    count_negative = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend==-1).count()
+    data = [count_positive, count_middle, count_negative]
+    res = {}
+    res['status'] = 200
+    res['msg'] = '请求成功'
+    res['data'] = data
     return jsonify(res)

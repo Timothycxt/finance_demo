@@ -4,9 +4,10 @@ from App.models.indu_news import Indu_news
 
 indu_news = Blueprint('indu_news', __name__)
 
-@indu_news.route('/indu_news',methods=['GET'])
+
+@indu_news.route('/indu_news', methods=['GET'])
 def economic_news():
-    indu_news=Indu_news.query.all()
+    indu_news = Indu_news.query.all()
     data = []
     res = {}  # 返回一个字典，包含状态码，信息，数据
     for item in indu_news:
