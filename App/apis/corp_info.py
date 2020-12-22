@@ -8,6 +8,7 @@ from App.models.corp_info import CorpInfo
 # （蓝图的名字，导入的名字）
 corp_info = Blueprint('corp_info', __name__)
 
+
 # 展示企业信息列表,每页展示10条
 @corp_info.route('/corp_info/<page>/<pre_page>', methods=['GET'])
 def corp_list(page,pre_page):
