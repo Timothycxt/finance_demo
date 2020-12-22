@@ -18,18 +18,22 @@ def economic_news(page,pre_page):
     pagination = Pagination(bs_version=3, page=page, total=total)
     corp_list = EconomicNews.query.slice(start, end)
 
+    items=[]
     res = {}
-    data = []
-    data.append({'total': total})
+    data = {}
 
     for corp in corp_list:
         tmp = corp.to_json()
+        time=str(tmp['publish_date'])
         tmp = {
+            'id':['id'],
             'title': tmp['title'],
             'link': tmp['link'],
-            'publish_date': tmp['publish_date']
+            'publishDate': time
         }
-        data.append(tmp)
+        items.append(tmp)
+    data['total']=total
+    data['items']=items
 
     res['status'] = 200
     res['msg'] = '请求成功'
