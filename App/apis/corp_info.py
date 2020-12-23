@@ -77,7 +77,7 @@ def corp_list(page,pre_page):
     return jsonify(res)
 
 
-# 一家企业信息列表,不用分页
+# 根据企业名称查询企业信息列表,不用分页
 @corp_info.route('/corp_info/<corporation>', methods=['GET'])
 def corp_by_name(corporation):
     total =1
@@ -89,6 +89,43 @@ def corp_by_name(corporation):
 
     for corp_info in corp_infos:
         tmp = corp_info.to_json()
+        time=str(tmp['establish_date'])
+        tmp = {
+            'id':tmp['id'],
+            'code': tmp['code'],
+            'name': tmp['name'],
+            'type': tmp['type'],
+            'legalPerson': tmp['legal_person'],
+            'registCapital': tmp['regist_capital'],
+            'industry': tmp['industry'],
+            'establishDate': time,
+            'businessScope': tmp['business_scope'],
+            'member': tmp['member']
+        }
+        items.append(tmp)
+    data['items']=items
+    data['total']=total
+
+    res['status']=200
+    res['msg']='请求成功'
+    res['data']=data
+    return jsonify(res)
+
+
+# 根据企业id查询企业信息,不用分页
+@corp_info.route('/corp_info/single/<id>', methods=['GET'])
+def corp_by_id(id):
+    id=int(id)
+    total =1
+    corp_infos = CorpInfo.query.filter(CorpInfo.id==id)
+
+    items=[]
+    data = {}
+    res = {}
+
+    for corp_info in corp_infos:
+        tmp = corp_info.to_json()
+        print(tmp)
         time=str(tmp['establish_date'])
         tmp = {
             'id':tmp['id'],

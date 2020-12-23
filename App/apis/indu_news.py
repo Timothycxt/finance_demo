@@ -16,7 +16,7 @@ def indu_new(page,pre_page):
     start = (page - 1) * pre_page
     end = start + pre_page
     pagination = Pagination(bs_version=3, page=page, total=total)
-    corp_list = Indu_news.query.slice(start, end)
+    corp_list = Indu_news.query.order_by(Indu_news.publish_date.desc()).slice(start, end)
 
     items=[]
     res = {}
