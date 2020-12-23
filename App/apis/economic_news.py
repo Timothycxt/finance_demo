@@ -26,7 +26,7 @@ def economic_news(page,pre_page):
         tmp = corp.to_json()
         time=str(tmp['publish_date'])
         tmp = {
-            'id':['id'],
+            'id':tmp['id'],
             'title': tmp['title'],
             'link': tmp['link'],
             'publishDate': time

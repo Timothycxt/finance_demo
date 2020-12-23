@@ -1,8 +1,6 @@
-import json
 # encoding='utf8'
 from flask import Blueprint, jsonify
 from flask_paginate import Pagination
-from sqlalchemy import func
 
 from App.models.corp_info import CorpInfo
 

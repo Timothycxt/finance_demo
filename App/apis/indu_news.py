@@ -26,7 +26,7 @@ def indu_new(page,pre_page):
         tmp = corp.to_json()
         time=str(tmp['publish_date'])
         tmp = {
-            'id':['id'],
+            'id':tmp['id'],
             'title': tmp['title'],
             'source': tmp['source'],
             'link': tmp['link'],
