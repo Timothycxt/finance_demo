@@ -38,11 +38,17 @@ def corp_news_list(page,pre_page):
     return jsonify(res)
 
 
-# 展示一家企业新闻列表,total为新闻数量
-@corp_news.route('/corp_news/<corporation>', methods=['GET'])
-def corp_by_name(corporation):
+# 展示一家企业新闻列表,每页10条新闻
+@corp_news.route('/corp_news/<corporation>/<page>/<pre_page>', methods=['GET'])
+def corp_by_name(corporation,page,pre_page):
+    page=int(page)
+    pre_page=int(pre_page)
+
     total=CorpNews.query.filter(CorpNews.corporation==corporation).count()
-    corp_news=CorpNews.query.filter(CorpNews.corporation==corporation)
+    start=(page-1)*pre_page
+    end=start+pre_page
+    pagination=Pagination(bs_version=3,page=page,total=total)
+    corp_news=CorpNews.query.slice(start,end)
 
     items=[]
     data={}
