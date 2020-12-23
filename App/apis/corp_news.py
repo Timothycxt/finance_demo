@@ -51,7 +51,8 @@ def corp_by_name(corporation, page, pre_page):
     start = (page - 1) * pre_page
     end = start + pre_page
     pagination = Pagination(bs_version=3, page=page, total=total)
-    corp_news = CorpNews.query.order_by(CorpNews.publish_date.desc()).slice(start, end)
+    corp_news = CorpNews.query.filter(CorpNews.corporation == corporation).order_by(CorpNews.publish_date.desc()).slice(
+        start, end)
 
     items = []
     data = {}
