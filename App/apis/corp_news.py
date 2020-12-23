@@ -60,12 +60,14 @@ def corp_by_name(corporation, page, pre_page):
 
     for corp_new in corp_news:
         tmp = corp_new.to_json()
+        time = str(tmp['publish_date'])
         tmp = {
             'id': tmp['id'],
             'title': tmp['title'],
             'link': tmp['link'],
             'emotion': tmp['emotion_trend'],
-            'keywords': tmp['keywords']
+            'keywords': tmp['keywords'],
+            'publish_date': time
         }
         items.append(tmp)
     data['total'] = total
@@ -74,6 +76,24 @@ def corp_by_name(corporation, page, pre_page):
     res['status'] = 200
     res['msg'] = '请求成功'
     res['data'] = data
+    return jsonify(res)
+
+
+# 一家公司的新闻的情感倾向分别之和
+@corp_news.route('/corp_news_emotion/<corporation>', methods=['GET'])
+def emotion(corporation):
+    total = CorpNews.query.filter(CorpNews.corporation == corporation).count()
+
+    positive = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(1)).count()
+    middle = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(0)).count()
+    negative = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(-1)).count()
+
+    res = {
+        'total': total,
+        'positive': positive,
+        'middle': middle,
+        'negative': negative
+    }
     return jsonify(res)
 
 
