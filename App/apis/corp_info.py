@@ -113,7 +113,7 @@ def corp_by_name(corporation):
 
 
 # 根据企业id查询企业信息,不用分页
-@corp_info.route('/corp_info/single/<id>', methods=['GET'])
+@corp_info.route('/corp_infoById/<id>', methods=['GET'])
 def corp_by_id(id):
     id=int(id)
     total =1
