@@ -3,3 +3,5 @@ flask_script
 flask_sqlalchemy
 pymysql
 py2neo
+jieba
+gensim
