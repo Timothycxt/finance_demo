@@ -23,6 +23,7 @@ def corp_news_list(page, pre_page):
     for corp_new in corp_news_list:
         tmp = corp_new.to_json()
         time = str(tmp['publish_date'])
+        time = time[0:10]
         tmp = {
             'id': tmp['id'],
             'title': tmp['title'],
@@ -61,6 +62,7 @@ def corp_by_name(corporation, page, pre_page):
     for corp_new in corp_news:
         tmp = corp_new.to_json()
         time = str(tmp['publish_date'])
+        time = time[0:10]
         tmp = {
             'id': tmp['id'],
             'title': tmp['title'],
@@ -88,12 +90,18 @@ def emotion(corporation):
     middle = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(0)).count()
     negative = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(-1)).count()
 
-    res = {
-        'total': total,
+    emotion = {
         'positive': positive,
         'middle': middle,
         'negative': negative
     }
+    data = {}
+    res = {}
+
+    data['emotion'] = emotion
+    res['status'] = 200
+    res['msg'] = '请求成功'
+    res['data'] = data
     return jsonify(res)
 
 
