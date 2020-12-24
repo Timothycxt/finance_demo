@@ -97,11 +97,11 @@ def emotion(corporation):
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/simu', methods=['GET'])
-def corp_news_simu():
-    simu = simu_cacu.getData()
+@corp_news.route('/corp_news/simu/<_id>', methods=['GET'])
+def corp_news_simu(_id):
+    score = simu_cacu.getData(_id)
     res = {}
     res['status'] = 200
     res['msg'] = '请求成功'
-    res['data'] = simu
+    res['data'] = score
     return jsonify(res)

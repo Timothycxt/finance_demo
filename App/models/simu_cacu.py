@@ -28,7 +28,7 @@ def corp_list():
     from manager import app
     app_context = app.app_context()
     app_context.push()
-    res = db.session.query(CorpInfo.name, CorpInfo.code).all()
+    res = db.session.query(CorpInfo.name, CorpInfo.id).all()
     data = {}
     for item in res:
         data.update({item[0]: item[1]})
@@ -60,6 +60,7 @@ dangerous = {0: 3, 1: 3, 2: 3, 3: 3, 4: 30, 5: 5, 6: 5, 7: 5, 8: 2, 9: 2, 10: 2,
 # 事件按年月分类
 event_group = {}
 corp_score = {}
+all_score = []
 
 
 def init_corp_score(n_year):
@@ -211,7 +212,7 @@ def get_corp_score(event_recorder, _id, year, month):
     score = 0.0
     for _num in range(0, len(corpus)):
         news_num = int(event_recorder.get(_num))
-        #print("新闻数:" + str(news_num))
+        # print("新闻数:" + str(news_num))
         if news_num > 1:
             score += math.log(news_num, 10) * dangerous.get(_num)
         elif news_num == 1:
@@ -246,7 +247,12 @@ def group_by_year(TF_list, n_year):
         _corp = {}
         _year = {}
         _month = []
-        if item['news_date'] > target_date and corp_id is not None:
+        if isinstance(item['news_date'], str):
+            continue
+            publist_date = datetime.datetime.fromisoformat(item['news_date'])
+        else:
+            publist_date = item['news_date']
+        if publist_date > target_date and corp_id is not None:
             _corp = event_group.get(corp_id)
             _year = _corp.get(int(item['news_date'].year))
             _month = _year.get(int(item['news_date'].month))
@@ -273,15 +279,16 @@ def analysis(n_year):
                 for i in range(0, len(corpus)):  # 初始化事件记录列表(15条)
                     event_recorder.update({i: 0})
                 for _month_item in _month:  # 一个月中的单个事件
-                    print(_month_item)
+                    # print(_month_item)
                     if event_recorder.get(_month_item["event_class"]) is not None:  # 发生了某类事件且事件已被记录
-                        print(event_recorder.get(_month_item["event_class"]), item, _year, month_num)
-                        event_recorder.update({_month_item["event_class"]: event_recorder.get(_month_item["event_class"]) + 1})  # 更新{事件： 数量+1}
+                        # print(event_recorder.get(_month_item["event_class"]), item, _year, month_num)
+                        event_recorder.update({_month_item["event_class"]: event_recorder.get(
+                            _month_item["event_class"]) + 1})  # 更新{事件： 数量+1}
                     else:  # 发生了某类事件且事件未被记录
-                        print(item, _year, month_num)
+                        # print(item, _year, month_num)
                         event_recorder.update({_month_item["event_class"]: 1})
                 response = get_corp_score(event_recorder, item, _year, month_num)  # 将一个月的事件送去处理打分
-                print(response)
+                # print(response)
 
     influence_corp_score = {}  # 受上个月影响的本月分数
     pre_score = 0
@@ -296,19 +303,34 @@ def analysis(n_year):
             __year_i = _corp_i.get(_year)
             __year = _corp.get(_year)
             for month_num in range(1, 13):  # 第三层月份列表
-                __year_i.update({month_num: []})
-                _month_i = __year_i.get(month_num)
+                # __year_i.update({month_num: []})
+                # _month_i = __year_i.get(month_num)
+                # _month = __year.get(month_num)
+                # _month_i.append(100 - pre_score * 0.13 - _month[0])
+                # pre_score = _month[0]
                 _month = __year.get(month_num)
-                _month_i.append(100 - pre_score * 0.13 - _month[0])
+                __year_i.update({month_num: 100 - pre_score * 0.13 - _month[0]})
                 pre_score = _month[0]
     return influence_corp_score
 
 
-def getData():
-    data = analysis(3)
-    print(data)
-    return data
+def getData(_id):
+    _data = all_score
+    if not all_score:
+        _data = analysis(3)
+    _corpus = _data.get(int(_id))  # 获取某个公司的数据
+    now_date = datetime.datetime.today()
+    _scores = []
+    for year_num in range(0, 3):
+        target_year = int(now_date.year) - year_num
+        _year = _corpus.get(target_year)
+        _scores.append({"label": target_year, "data": list(_year.values())})
+    print(_scores)
+    return_data = {
+        "id": _id,
+        "datasets": _scores
+    }
+    return return_data
 
-
-if __name__ == "__main__":
-    getData()
+# if __name__ == "__main__":
+#     getData(1)
