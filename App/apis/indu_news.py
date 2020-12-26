@@ -3,6 +3,7 @@ from flask import jsonify
 from flask_paginate import Pagination
 
 from App.models.indu_news import Indu_news
+from App.service.WordCloud import get_keywords
 
 indu_news = Blueprint('indu_news', __name__)
 
@@ -36,4 +37,14 @@ def indu_new(page,pre_page):
     res['status'] = 200
     res['msg'] = '请求成功'
     res['data'] = data
+    return jsonify(res)
+
+# 获取行业词云所需的词频
+@indu_news.route('/indu_news/keywords/<industry>', methods=['GET', 'POST'])
+def _get_keywords(industry):
+    industry = str(industry).strip()
+    print(industry)
+
+    res = {'status': 200, 'msg': '请求成功', 'data': {'defaultWords': get_keywords(industry)}}
+
     return jsonify(res)
