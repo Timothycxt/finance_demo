@@ -64,7 +64,8 @@ all_score = []
 
 
 def init_corp_score(n_year):
-    now_date = datetime.datetime.today()
+    now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
+    # now_date = datetime.datetime.today()
     corp_group = corp_list()  # 公司name-code
     value = list(corp_group.values())
     for i in range(0, len(value)):
@@ -319,7 +320,8 @@ def getData(_id):
     if not all_score:
         _data = analysis(3)
     _corpus = _data.get(int(_id))  # 获取某个公司的数据
-    now_date = datetime.datetime.today()
+    now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
+    # now_date = datetime.datetime.today()
     _scores = []
     for year_num in range(0, 3):
         target_year = int(now_date.year) - year_num
