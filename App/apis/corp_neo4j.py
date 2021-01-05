@@ -4,7 +4,7 @@ from App.dao.neo4j import get_all_triplets
 # （蓝图的名字，导入的名字）
 corp_neo4j = Blueprint('corp_neo4j', __name__)
 
-
+# 获取企业知识图谱中的所有三元组
 @corp_neo4j.route('/corp_neo4j/get_all_triplets', methods=['GET'])
 def get_all_triplets_():
     relationships = get_all_triplets()
