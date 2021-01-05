@@ -142,11 +142,3 @@ def corp_by_id(id):
     res['msg'] = '请求成功'
     res['data'] = data
     return jsonify(res)
-
-
-@corp_info.route('/corp/add', methods=['POST'])
-def addCorp():
-    corpInfo = CorpInfo()
-    corpInfo.name = "test"
-    corpInfo.save()
-    return 'res'

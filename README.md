@@ -9,7 +9,7 @@
 [![JjgwsU.md.png](https://s1.ax1x.com/2020/05/02/JjgwsU.md.png)](https://imgchr.com/i/JjgwsU)
 
 # 本地调试
-`edit configuration`里的`parameter`加上`runserver`
+运行manager.py文件，`edit configuration`里的`parameter`加上`runserver`
 
 # 部署
 1\. 上传项目到服务器
