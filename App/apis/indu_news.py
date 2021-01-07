@@ -8,7 +8,7 @@ from App.service.WordCloud import get_keywords
 indu_news = Blueprint('indu_news', __name__)
 
 
-@indu_news.route('/indu_news/<industry>/<page>/<pre_page>', methods=['GET'])
+@indu_news.route('/indu_news/page/<industry>/<page>/<pre_page>', methods=['GET'])
 def indu_new(industry, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
