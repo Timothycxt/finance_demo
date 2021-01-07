@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import math
 
 import jieba
@@ -64,7 +64,7 @@ all_score = []
 
 
 def init_corp_score(n_year):
-    now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
+    now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
     # now_date = datetime.datetime.today()
     corp_group = corp_list()  # 公司name-code
     value = list(corp_group.values())
@@ -201,7 +201,7 @@ def bulid():
 
 
 def get_target_date(n_year):
-    now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
+    now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
     target_year = int(now_date.year) - n_year
     target_month = str(now_date.month)
     target_day = str(now_date.day)
@@ -231,7 +231,7 @@ def group_by_year(TF_list, n_year):
     value = list(corp_group.values())
 
     now_date, target_year, target_month, target_day = get_target_date(n_year)
-    target_date = datetime.datetime.fromisoformat(str(target_year) + '-' + target_month + '-' + target_day)  # n年前的今天的日期
+    target_date = datetime.strptime(str(target_year) + '-' + target_month + '-' + target_day, '%Y-%m-%d')  # n年前的今天的日期
     for corp_id in value:
         event_group.update({corp_id: {}})
         _id = event_group.get(corp_id)
@@ -250,7 +250,7 @@ def group_by_year(TF_list, n_year):
         _month = []
         if isinstance(item['news_date'], str):
             continue
-            publist_date = datetime.datetime.fromisoformat(item['news_date'])
+            publist_date = datetime.strptime(item['news_date'], '%Y-%m-%d')
         else:
             publist_date = item['news_date']
         if publist_date > target_date and corp_id is not None:
@@ -320,7 +320,7 @@ def getData(_id):
     if not all_score:
         _data = analysis(3)
     _corpus = _data.get(int(_id))  # 获取某个公司的数据
-    now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
+    now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
     # now_date = datetime.datetime.today()
     _scores = []
     for year_num in range(0, 3):
