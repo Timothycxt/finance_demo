@@ -7,7 +7,7 @@ from App.models.economic_news import EconomicNews
 economic_new = Blueprint('economic_news', __name__)
 
 
-@economic_new.route('/economic_news/<page>/<pre_page>', methods=['GET'])
+@economic_new.route('/economic_news/page/<page>/<pre_page>', methods=['GET'])
 def economic_news(page, pre_page):
     page = int(page)
     pre_page = int(pre_page)

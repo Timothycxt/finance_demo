@@ -8,7 +8,7 @@ from App.service.WordCloud import get_keywords
 indu_news = Blueprint('indu_news', __name__)
 
 
-@indu_news.route('/indu_news/<industry>/<page>/<pre_page>', methods=['GET'])
+@indu_news.route('/indu_news/page/<industry>/<page>/<pre_page>', methods=['GET'])
 def indu_new(industry, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
@@ -46,11 +46,29 @@ def indu_new(industry, page, pre_page):
 
 
 # 获取行业词云所需的词频
+# parameters:
+#   industry: 行业名称
+# returns:
+#   一个json格式的字典
+#   example:
+#         {
+#             "data": {
+#                 # 行业热点词汇及其词频
+#                 "defaultWords": [
+#                     {
+#                         "name": "生物",
+#                         "value": 1.0
+#                     },
+#                 ]
+#             },
+#             # 请求状态
+#             "msg": "请求成功",
+#             "status": 200
+#         }
 @indu_news.route('/indu_news/keywords/<industry>', methods=['GET', 'POST'])
 def _get_keywords(industry):
     industry = str(industry).strip()
     print(industry)
 
     res = {'status': 200, 'msg': '请求成功', 'data': {'defaultWords': get_keywords(industry)}}
-
     return jsonify(res)

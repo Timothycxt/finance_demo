@@ -7,7 +7,7 @@ corp_news = Blueprint('corp_news', __name__)
 
 
 # 所有新闻的展示列表,每页10条新闻标题
-@corp_news.route('/corp_news/<page>/<pre_page>', methods=['GET'])
+@corp_news.route('/corp_news/page/<page>/<pre_page>', methods=['GET'])
 def corp_news_list(page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
@@ -43,7 +43,7 @@ def corp_news_list(page, pre_page):
 
 
 # 展示一家企业新闻列表,每页10条新闻
-@corp_news.route('/corp_news/<corporation>/<page>/<pre_page>', methods=['GET'])
+@corp_news.route('/corp_news/page/<corporation>/<page>/<pre_page>', methods=['GET'])
 def corp_by_name(corporation, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
@@ -82,7 +82,7 @@ def corp_by_name(corporation, page, pre_page):
 
 
 # 一家公司的新闻的情感倾向分别之和
-@corp_news.route('/corp_news_emotion/<corporation>', methods=['GET'])
+@corp_news.route('/corp_news/emotion/<corporation>', methods=['GET'])
 def emotion(corporation):
     total = CorpNews.query.filter(CorpNews.corporation == corporation).count()
 

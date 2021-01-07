@@ -6,7 +6,18 @@ import os
 # from pyecharts.globals import SymbolType
 
 
-# 获取行业关键字及频率
+# 根据行业最近新闻返回热点词及其词频
+# parameters:
+#   industry: 行业名称
+# returns:
+#     [
+#         # 热点词和词频
+#         {
+#             "name": "生物",
+#             "value": 1.0
+#         },
+#         ...
+#     ]
 def get_keywords(industry):
     news = get_recent_news(industry)
     text = ' '.join(news)
