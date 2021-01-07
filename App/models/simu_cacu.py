@@ -59,10 +59,13 @@ corpus = [
 dangerous = {0: 3, 1: 3, 2: 3, 3: 3, 4: 30, 5: 5, 6: 5, 7: 5, 8: 2, 9: 2, 10: 2, 11: 7, 12: 7, 13: 7, 14: 10}
 # 事件按年月分类
 event_group = {}
+# 企业扣分分数
 corp_score = {}
+# 处理后返回给前端的分数
 all_score = []
 
 
+# 初始化corp_score数据格式
 def init_corp_score(n_year):
     now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
     # now_date = datetime.datetime.today()
@@ -79,8 +82,8 @@ def init_corp_score(n_year):
                 __year.update({month_num: []})
 
 
+# 建立事件本体词袋模型
 def event_bow():
-    # 建立事件本体词袋模型
     dictionary = corpora.Dictionary(corpus)
     doc_vectors = [dictionary.doc2bow(text) for text in corpus]
     for text in corpus:
@@ -102,9 +105,7 @@ def cut_words(news, stopwords):
     all_words = []
     for i in range(0, len(news)):
         words = jieba.lcut(''.join(news[i][0].split()))
-        # print(len(words), words)
         res = drop_Disable_Words(words, stopwords)
-        # print(len(res), type(res), res, res[0])
         all_words.append([res, news[i][1], news[i][2]])
     return all_words
 
@@ -138,8 +139,6 @@ def caculate(words, dictionary, doc_vectors):
 
         tfidf = models.TfidfModel(doc_vectors)
         tfidf_vectors = tfidf[doc_vectors]
-        # for i in range(0, len(tfidf_vectors)):
-        #     print(len(tfidf_vectors[i]), tfidf_vectors[i])
 
         # 使用TF-IDF模型计算相似度
         TF_list = TF_IDF(tfidf_vectors, news_bow)
@@ -153,23 +152,6 @@ def caculate(words, dictionary, doc_vectors):
                 event_class = TF_list[i][0]
         return {"words": words[0], "corp_name": words[1], "news_date": words[2], "event_class": event_class,
                 "confidence": confidence}  # [分词，公司名，时间，匹配事件类，可信度]
-    # tfidf = models.TfidfModel(doc_vectors)
-    # tfidf_vectors = tfidf[doc_vectors]
-    # # for i in range(0, len(tfidf_vectors)):
-    # #     print(len(tfidf_vectors[i]), tfidf_vectors[i])
-    #
-    # # 使用TF-IDF模型计算相似度
-    # TF_list = TF_IDF(tfidf_vectors, news_bow)
-    # # print("TF_IDF:", TF_list, '\n')
-    # event_class = 0  # 事件类
-    # confidence = 0  # 置信度
-    # # 取可信度最高的事件类
-    # for i in range(0, len(TF_list)):
-    #     if confidence < TF_list[i][1]:
-    #         confidence = TF_list[i][1]
-    #         event_class = TF_list[i][0]
-    # return {"words": words[0], "corp_name": words[1], "news_date": words[2], "event_class": event_class,
-    #         "confidence": confidence}  # [分词，公司名，时间，匹配事件类，可信度]
 
 
 # 建立TF-IDF模型
@@ -179,6 +161,7 @@ def TF_IDF(tfidf_vectors, news_bow):
     return list(enumerate(sims))
 
 
+# 筛选有价值的新闻
 def bulid():
     # 建立事件本体词袋模型
     dictionary, doc_vectors = event_bow()
@@ -190,16 +173,11 @@ def bulid():
     for words in all_words:
         result = caculate(words, dictionary, doc_vectors)  # [分词，公司名，时间，匹配事件类，可信度]
         if result is not None:
-            # ######################################################
-            # with open("负面事件.txt", 'a', encoding="utf8") as f:
-            #     for i in result:
-            #         f.write(''.join(str(i)) + " ")
-            #     f.write('\n')
-            # ######################################################
             TF_list.append(result)
     return TF_list
 
 
+# 获取计算起始年份
 def get_target_date(n_year):
     now_date = datetime.datetime.fromisoformat('2020-12-31')  # 当前时间，假定是2020-12-31
     target_year = int(now_date.year) - n_year
@@ -208,6 +186,7 @@ def get_target_date(n_year):
     return now_date, target_year, target_month, target_day
 
 
+# 新闻扣分
 def get_corp_score(event_recorder, _id, year, month):
     corp_id = corp_score.get(_id)
     score = 0.0
@@ -226,10 +205,10 @@ def get_corp_score(event_recorder, _id, year, month):
     return str(_id) + str(year) + str(month) + "已处理,分数:" + str(score)
 
 
+# 把新闻按年月区分
 def group_by_year(TF_list, n_year):
     corp_group = corp_list()  # 公司name-code
     value = list(corp_group.values())
-
     now_date, target_year, target_month, target_day = get_target_date(n_year)
     target_date = datetime.datetime.fromisoformat(str(target_year) + '-' + target_month + '-' + target_day)  # n年前的今天的日期
     for corp_id in value:
@@ -250,7 +229,7 @@ def group_by_year(TF_list, n_year):
         _month = []
         if isinstance(item['news_date'], str):
             continue
-            publist_date = datetime.datetime.fromisoformat(item['news_date'])
+            # publist_date = datetime.datetime.fromisoformat(item['news_date'])
         else:
             publist_date = item['news_date']
         if publist_date > target_date and corp_id is not None:
@@ -258,11 +237,11 @@ def group_by_year(TF_list, n_year):
             _year = _corp.get(int(item['news_date'].year))
             _month = _year.get(int(item['news_date'].month))
             _month.append(item)
-        # event_group.get(_corp).get(int(item['news_date'].year)).update({int(item['news_date'].month): _month})
 
     return event_group
 
 
+# 把group_by_year区分好的数据按事件类型区分处理，处理好的数据送入get_corp_score扣分后再生成最终的企业分数
 def analysis(n_year):
     init_corp_score(n_year)  # 初始化corp_score
     TF_list = bulid()  # 语义匹配数据
@@ -280,16 +259,12 @@ def analysis(n_year):
                 for i in range(0, len(corpus)):  # 初始化事件记录列表(15条)
                     event_recorder.update({i: 0})
                 for _month_item in _month:  # 一个月中的单个事件
-                    # print(_month_item)
                     if event_recorder.get(_month_item["event_class"]) is not None:  # 发生了某类事件且事件已被记录
-                        # print(event_recorder.get(_month_item["event_class"]), item, _year, month_num)
                         event_recorder.update({_month_item["event_class"]: event_recorder.get(
                             _month_item["event_class"]) + 1})  # 更新{事件： 数量+1}
                     else:  # 发生了某类事件且事件未被记录
-                        # print(item, _year, month_num)
                         event_recorder.update({_month_item["event_class"]: 1})
                 response = get_corp_score(event_recorder, item, _year, month_num)  # 将一个月的事件送去处理打分
-                # print(response)
 
     influence_corp_score = {}  # 受上个月影响的本月分数
     pre_score = 0
@@ -304,17 +279,13 @@ def analysis(n_year):
             __year_i = _corp_i.get(_year)
             __year = _corp.get(_year)
             for month_num in range(1, 13):  # 第三层月份列表
-                # __year_i.update({month_num: []})
-                # _month_i = __year_i.get(month_num)
-                # _month = __year.get(month_num)
-                # _month_i.append(100 - pre_score * 0.13 - _month[0])
-                # pre_score = _month[0]
                 _month = __year.get(month_num)
-                __year_i.update({month_num: 100 - pre_score * 0.13 - _month[0]})
+                __year_i.update({month_num: 100 - pre_score * 0.13 - _month[0]})  # 给本月打分
                 pre_score = _month[0]
     return influence_corp_score
 
 
+# 对获取分数进行处理，生成可返回前端的数据
 def getData(_id):
     _data = all_score
     if not all_score:
