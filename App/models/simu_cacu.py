@@ -55,12 +55,21 @@ corpus = [
     ['管理层内斗', '高层离职', '争斗控制权', '打压异己', '打压', '排挤', '罢免', '辞职', '离职', '离开', '清嫡', '管理层内斗', '内斗', '争夺控制权', '冲突升级'],
     ['股票套现', '减持股票', '抛售股票', '套现', '减持', '抛售'],
 ]
+# 事件类-id映射
+id2event = [item[0] for item in corpus]
+event2id = {id2event[i]: i for i in range(len(id2event))}
+
 # 严重程度
 dangerous = {0: 3, 1: 3, 2: 3, 3: 3, 4: 30, 5: 5, 6: 5, 7: 5, 8: 2, 9: 2, 10: 2, 11: 7, 12: 7, 13: 7, 14: 10}
 # 事件按年月分类
+# 字典 公司id:年份dict
+# 年份dict 年份:月份dict
+# 月份dict 月份:事件类匹配结果list
 event_group = {}
+
 # 企业扣分分数
 corp_score = {}
+
 # 处理后返回给前端的分数
 all_score = []
 
@@ -68,7 +77,7 @@ all_score = []
 # 初始化corp_score数据格式
 def init_corp_score(n_year):
     now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
-    # now_date = datetime.datetime.today()
+    # now_date = datetime.today()
     corp_group = corp_list()  # 公司name-code
     value = list(corp_group.values())
     for i in range(0, len(value)):
@@ -84,8 +93,8 @@ def init_corp_score(n_year):
 
 # 建立事件本体词袋模型
 def event_bow():
-    dictionary = corpora.Dictionary(corpus)
-    doc_vectors = [dictionary.doc2bow(text) for text in corpus]
+    dictionary = corpora.Dictionary(corpus)  # 建立词典
+    doc_vectors = [dictionary.doc2bow(text) for text in corpus]  # 每条文本转为向量，词语对应词典中的index
     for text in corpus:
         print("text:", text)
     # print(len(doc_vectors), doc_vectors)
@@ -129,10 +138,16 @@ def read_stop_word(file_path):
     return stopwords
 
 
-# 计算相似度
 def caculate(words, dictionary, doc_vectors):
+    """
+    计算新闻与所有事件类的相似度
+    :param words: 一条分词后的新闻 [['豪华', '务实', '奥迪', 'Q3', '静态', '凯迪拉克', 'XT4'], '上汽通用汽车有限公司', datetime.datetime(2020, 12, 3, 0, 0)]
+    :param dictionary: 事件类的词典
+    :param doc_vectors:
+    :return:
+    """
     news_bow = dictionary.doc2bow(words[0])  # 建立新闻文本向量
-    date = words[2]
+    # 新闻中没有事件类相关的单词则丢弃
     if len(news_bow) != 0:
         # print("words:", words)
         # print("news_bow:", news_bow)  # (x,y) ID为x的单词出现了y次
@@ -172,6 +187,7 @@ def bulid():
     TF_list = []
     for words in all_words:
         result = caculate(words, dictionary, doc_vectors)  # [分词，公司名，时间，匹配事件类，可信度]
+        # 新闻中没有事件类相关的单词则返回空，丢弃
         if result is not None:
             TF_list.append(result)
     return TF_list
@@ -207,12 +223,12 @@ def get_corp_score(event_recorder, _id, year, month):
 
 # 把新闻按年月区分
 def group_by_year(TF_list, n_year):
-    corp_group = corp_list()  # 公司name-code
+    corp_group = corp_list()  # 字典 公司name：id
     value = list(corp_group.values())
     now_date, target_year, target_month, target_day = get_target_date(n_year)
     target_date = datetime.strptime(str(target_year) + '-' + target_month + '-' + target_day, '%Y-%m-%d')  # n年前的今天的日期
     for corp_id in value:
-        event_group.update({corp_id: {}})
+        event_group.update({corp_id: {}})  # event_group存储事件按年月分类结果
         _id = event_group.get(corp_id)
         for year_num in range(0, n_year):  # 创建n个年月二维列表，如果当前不是年底可以在今年后面的空缺月里补第一年多出的几个月，也可用新方法创建列表
             _year = int(now_date.year) - year_num
@@ -220,7 +236,6 @@ def group_by_year(TF_list, n_year):
             __year = _id.get(_year)
             for month_num in range(1, 13):
                 __year.update({month_num: []})
-
     # 把事件按年月过滤、分类
     for item in TF_list:
         corp_id = corp_group.get(item['corp_name'])
@@ -237,16 +252,23 @@ def group_by_year(TF_list, n_year):
             _month = _year.get(int(item['news_date'].month))
             _month.append(item)
 
-    return event_group
+    # return event_group
 
 
 # 把group_by_year区分好的数据按事件类型区分处理，处理好的数据送入get_corp_score扣分后再生成最终的企业分数
 def analysis(n_year):
-    init_corp_score(n_year)  # 初始化corp_score
-    TF_list = bulid()  # 语义匹配数据
-    group_by_year(TF_list, n_year)  # 事件分类函数
-    now_date, target_year, target_month, target_day = get_target_date(n_year)  # 获取时间范围
+    """
 
+    :param n_year: 根据最近几年的数据进行分析
+    :return:
+    """
+    init_corp_score(n_year)  # 初始化corp_score
+    # 所有公司新闻与所有事件类的相似度匹配结果
+    # {'words': ['美国', '新造', '车', '公司', '陷', '欺诈', '风波', '通用', '放弃', '持股', '计划'], 'corp_name': '上汽通用汽车有限公司', 'news_date': datetime.datetime(2020, 12, 3, 0, 0), 'event_class': 0, 'confidence': 0.31622776}
+    TF_list = bulid()
+    group_by_year(TF_list, n_year)  # 将匹配结果根据年份分类
+    now_date, target_year, target_month, target_day = get_target_date(n_year)  # 获取时间范围
+    # 处理每一个公司
     for item in event_group:
         _corp = event_group.get(item)  # 事件类的公司列表
         for year_num in range(0, n_year):
@@ -284,25 +306,33 @@ def analysis(n_year):
     return influence_corp_score
 
 
-# 对获取分数进行处理，生成可返回前端的数据
 def getData(_id):
+    """
+    计算所有企业各月份得分，返回前端需要的格式
+    :param _id:
+    :return:
+    """
+    # all_score存储计算结果，如果之前计算过则无需重复计算
     _data = all_score
     if not all_score:
-        _data = analysis(3)
-    _corpus = _data.get(int(_id))  # 获取某个公司的数据
+        _data = analysis(3)  # 所有企业id和企业得分的映射，企业得分是年份与月份得分的映射，月份得分是月份与得分的映射
+    _corpus = _data.get(int(_id))  # 根据id获取某个公司的得分数据
     now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
     # now_date = datetime.datetime.today()
     _scores = []
     for year_num in range(0, 3):
         target_year = int(now_date.year) - year_num
-        _year = _corpus.get(target_year)
-        _scores.append({"label": target_year, "data": list(_year.values())})
-    print(_scores)
-    return_data = {
-        "id": _id,
-        "datasets": _scores
-    }
-    return return_data
+        _year = _corpus.get(target_year)  # 根据年份获取该公司的得分数据
+        source = [[id2event[item['event_class']] for item in month] for month in
+                  event_group[int(_id)][target_year].values()]
+        source = [list(set(month)) for month in source]
+        _scores.append({"label": target_year, "data": list(_year.values()), "source": source})
+        print(_scores)
+        return_data = {
+            "id": _id,
+            "datasets": _scores
+        }
+        return return_data
 
-# if __name__ == "__main__":
-#     getData(1)
+    # if __name__ == "__main__":
+    #     getData(1)
