@@ -47,18 +47,18 @@ def corp_news_list(page, pre_page):
 
 
 # 展示一家企业新闻列表,每页10条新闻
-@corp_news.route('/corp_news/page/<code>/<page>/<pre_page>', methods=['GET'])
-def corp_by_name(code, page, pre_page):
+@corp_news.route('/corp_news/page/<NSRSBM>/<NSRMC>/<SSXDM>/<page>/<pre_page>', methods=['GET'])
+def corp_by_name(NSRSBM, NSRMC, SSXDM, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
 
     total = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == code).count()
+        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).count()
     start = (page - 1) * pre_page
     end = start + pre_page
     pagination = Pagination(bs_version=3, page=page, total=total)
     corp_news = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == code).slice(start, end)
+        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).slice(start, end)
 
     items = []
     data = {}
@@ -87,19 +87,19 @@ def corp_by_name(code, page, pre_page):
 
 
 # 一家公司的新闻的情感倾向分别之和
-@corp_news.route('/corp_news/emotion/<code>', methods=['GET'])
-def emotion(code):
+@corp_news.route('/corp_news/emotion/<NSRSBM>/<NSRMC>/<SSXDM>', methods=['GET'])
+def emotion(NSRSBM, NSRMC, SSXDM):
     total = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == code)
+        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC)
 
     positive = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(1)).count()
+        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).filter(CorpNews.emotion_trend == str(1)).count()
 
     middle = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(0)).count()
+        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).filter(CorpNews.emotion_trend == str(0)).count()
 
     negative = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(-1)).count()
+        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).filter(CorpNews.emotion_trend == str(-1)).count()
 
     emotion = {
         'positive': positive,
