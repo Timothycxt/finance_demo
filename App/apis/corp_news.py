@@ -105,11 +105,16 @@ def emotion(corporation):
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/simu/<_id>', methods=['GET'])
-def corp_news_simu(_id):
-    score = simu_cacu.getData(_id)
+@corp_news.route('/corp_news/simu/<_code>/<int:_year>/<int:_month>', methods=['GET'])
+def corp_news_simu(_code, _year, _month):
     res = {}
-    res['status'] = 200
-    res['msg'] = '请求成功'
-    res['data'] = score
+
+    if 2018 <= _year <= 2020 and 1 <= _month <= 12:
+        score = simu_cacu.getData(_code, _year, _month)
+        res['status'] = 200
+        res['msg'] = '请求成功'
+        res['data'] = score
+    else:
+        res['status'] = 200
+        res['data'] = "请求数据错误"
     return jsonify(res)
