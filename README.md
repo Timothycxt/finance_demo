@@ -14,11 +14,11 @@
 # 部署
 1\. 上传项目到服务器
 
-2\. 在 Dockerfile 文件所在目录，构建名为flaskproject的镜像： 
+2\. 在 Dockerfile 文件所在目录，构建名为finance的镜像： 
 ```bash
-docker build -t flaskproject .
+docker build -t finance .
 ```  
 3\. 运行容器
 ```bash
-docker run -d -p 8000:8000 flaskproject
+docker run -d -p 9003:5000 finance
 ```
