@@ -353,7 +353,7 @@ def analysis(n_year):
 
 def score_update():
     """
-    计算所有企业各月份得分，返回前端需要的格式
+    计算所有企业各月份得分,储存到数据库
     :param _id:
     :return:
     """
@@ -381,13 +381,19 @@ def score_update():
     return "OK"
 
 
-def getData(_code):
+def getData(_code, _year, _month):
     _score = search_score_by_code(str(_code))
-    print(_score)
     _score = eval(_score)
+    _month_score = 0
+    _source = []
+    for item in _score:
+        if item.get("label") == _year:
+            _month_score = item.get('data')[_month-1]
+            _source = item.get('source')[_month-1]
     return_data = {
-        "id": _code,
-        "datasets": _score
+        "code": _code,
+        "source": _source,
+        "score": _month_score
     }
     return return_data
     # if __name__ == "__main__":

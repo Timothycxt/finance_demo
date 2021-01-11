@@ -87,19 +87,19 @@ def corp_by_name(code, page, pre_page):
 
 
 # 一家公司的新闻的情感倾向分别之和
-@corp_news.route('/corp_news/emotion/<NSRSBM>/<NSRMC>/<SSXDM>', methods=['GET'])
-def emotion(NSRSBM, NSRMC, SSXDM):
+@corp_news.route('/corp_news/emotion/<code>', methods=['GET'])
+def emotion(code):
     total = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC)
+        CorpInfo.code == code)
 
     positive = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).filter(CorpNews.emotion_trend == str(1)).count()
+        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(1)).count()
 
     middle = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).filter(CorpNews.emotion_trend == str(0)).count()
+        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(0)).count()
 
     negative = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
-        CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC).filter(CorpNews.emotion_trend == str(-1)).count()
+        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(-1)).count()
 
     emotion = {
         'positive': positive,
@@ -116,11 +116,16 @@ def emotion(NSRSBM, NSRMC, SSXDM):
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/simu/<_id>', methods=['GET'])
-def corp_news_simu(_id):
-    score = simu_cacu.getData(_id)
+@corp_news.route('/corp_news/simu/<_code>/<int:_year>/<int:_month>', methods=['GET'])
+def corp_news_simu(_code, _year, _month):
     res = {}
-    res['status'] = 200
-    res['msg'] = '请求成功'
-    res['data'] = score
+
+    if 2018 <= _year <= 2020 and 1 <= _month <= 12:
+        score = simu_cacu.getData(_code, _year, _month)
+        res['status'] = 200
+        res['msg'] = '请求成功'
+        res['data'] = score
+    else:
+        res['status'] = 200
+        res['data'] = "请求数据错误"
     return jsonify(res)
