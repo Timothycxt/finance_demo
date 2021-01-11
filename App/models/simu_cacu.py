@@ -1,12 +1,12 @@
 from datetime import datetime
 import math
-
 import jieba
 from gensim import corpora, models, similarities
 import codecs
 from App.extensions import db
 from App.models.corp_info import CorpInfo
 from App.models.corp_news import CorpNews
+from App.models.corp_score import Corp_score
 
 
 # 查询新闻中的标题、公司、发布时间
@@ -28,12 +28,42 @@ def corp_list():
     from manager import app
     app_context = app.app_context()
     app_context.push()
-    res = db.session.query(CorpInfo.name, CorpInfo.id).all()
+    res = db.session.query(CorpInfo.name, CorpInfo.code).all()
     data = {}
     for item in res:
         data.update({item[0]: item[1]})
     app_context.pop()
     return data
+
+
+# 按公司编号存储/更新分数
+def score_to_database(_code, _scores):
+    from manager import app
+    app_context = app.app_context()
+    app_context.push()
+    _exist = Corp_score.query.filter_by(code=_code).first()
+    if _exist is not None:
+        Corp_score.query.filter_by(code=_code).update({'score': _scores})
+        res = "Already Update"
+        print("Update")
+    else:
+        _corp_score = Corp_score(code=_code, score=_scores)
+        db.session.add(_corp_score)
+        db.session.commit()
+        res = "Already Add"
+        print("Add")
+    app_context.pop()
+    return res
+
+
+# 按公司编号查询分数
+def search_score_by_code(_code):
+    from manager import app
+    app_context = app.app_context()
+    app_context.push()
+    _score = Corp_score.query.filter_by(code=_code).first()
+    app_context.pop()
+    return _score.score
 
 
 # 事件类描述词
@@ -321,9 +351,9 @@ def analysis(n_year):
     return influence_corp_score
 
 
-def getData(_id):
+def score_update():
     """
-    计算所有企业各月份得分，返回前端需要的格式
+    计算所有企业各月份得分,储存到数据库
     :param _id:
     :return:
     """
@@ -331,23 +361,40 @@ def getData(_id):
     _data = all_score
     if not all_score:
         _data = analysis(3)  # 所有企业id和企业得分的映射，企业得分是年份与月份得分的映射，月份得分是月份与得分的映射
-    _corpus = _data.get(int(_id))  # 根据id获取某个公司的得分数据
-    now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
-    # now_date = datetime.datetime.today()
-    _scores = []
-    for year_num in range(0, 3):
-        target_year = int(now_date.year) - year_num
-        _year = _corpus.get(target_year)  # 根据年份获取该公司的得分数据
-        source = [[id2event[item['event_class']] for item in month] for month in
-                  event_group[int(_id)][target_year].values()]
-        source = [list(set(month)) for month in source]
-        _scores.append({"label": target_year, "data": list(_year.values()), "source": source})
-        print(_scores)
+
+    _corp_id = list(corp_list().values())
+    for _id in _corp_id:
+        _corpus = _data.get(str(_id))  # 根据id获取某个公司的得分数据
+        now_date = datetime.strptime('2020-12-31', '%Y-%m-%d')  # 当前时间，假定是2020-12-31
+        # now_date = datetime.datetime.today()
+        _scores = []
+        for year_num in range(0, 3):
+            target_year = int(now_date.year) - year_num
+            _year = _corpus.get(target_year)  # 根据年份获取该公司的得分数据
+            source = [[id2event[item['event_class']] for item in month] for month in
+                      event_group[str(_id)][target_year].values()]
+            source = [list(set(month)) for month in source]
+            _scores.append({"label": target_year, "data": list(_year.values()), "source": source})
+            print(_scores)
+        _scores2str = str(_scores)
+        score_to_database(_id, _scores2str)
+    return "OK"
+
+
+def getData(_code, _year, _month):
+    _score = search_score_by_code(str(_code))
+    _score = eval(_score)
+    _month_score = 0
+    _source = []
+    for item in _score:
+        if item.get("label") == _year:
+            _month_score = item.get('data')[_month-1]
+            _source = item.get('source')[_month-1]
     return_data = {
-        "id": _id,
-        "datasets": _scores
+        "code": _code,
+        "source": _source,
+        "score": _month_score
     }
     return return_data
-
     # if __name__ == "__main__":
     #     getData(1)

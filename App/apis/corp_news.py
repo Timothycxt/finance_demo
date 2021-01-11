@@ -1,6 +1,10 @@
 from flask import Blueprint, jsonify
+from sqlalchemy import and_
+
 from App.models import simu_cacu
 from flask_paginate import Pagination, request, get_page_parameter
+
+from App.models.corp_info import CorpInfo
 from App.models.corp_news import CorpNews
 
 corp_news = Blueprint('corp_news', __name__)
@@ -43,17 +47,18 @@ def corp_news_list(page, pre_page):
 
 
 # 展示一家企业新闻列表,每页10条新闻
-@corp_news.route('/corp_news/page/<corporation>/<page>/<pre_page>', methods=['GET'])
-def corp_by_name(corporation, page, pre_page):
+@corp_news.route('/corp_news/page/<code>/<page>/<pre_page>', methods=['GET'])
+def corp_by_name(code, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
 
-    total = CorpNews.query.filter(CorpNews.corporation == corporation).count()
+    total = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
+        CorpInfo.code == code).count()
     start = (page - 1) * pre_page
     end = start + pre_page
     pagination = Pagination(bs_version=3, page=page, total=total)
-    corp_news = CorpNews.query.filter(CorpNews.corporation == corporation).order_by(CorpNews.publish_date.desc()).slice(
-        start, end)
+    corp_news = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
+        CorpInfo.code == code).slice(start, end)
 
     items = []
     data = {}
@@ -82,13 +87,19 @@ def corp_by_name(corporation, page, pre_page):
 
 
 # 一家公司的新闻的情感倾向分别之和
-@corp_news.route('/corp_news/emotion/<corporation>', methods=['GET'])
-def emotion(corporation):
-    total = CorpNews.query.filter(CorpNews.corporation == corporation).count()
+@corp_news.route('/corp_news/emotion/<code>', methods=['GET'])
+def emotion(code):
+    total = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
+        CorpInfo.code == code)
 
-    positive = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(1)).count()
-    middle = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(0)).count()
-    negative = CorpNews.query.filter(CorpNews.corporation == corporation, CorpNews.emotion_trend == str(-1)).count()
+    positive = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
+        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(1)).count()
+
+    middle = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
+        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(0)).count()
+
+    negative = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
+        CorpInfo.code == code).filter(CorpNews.emotion_trend == str(-1)).count()
 
     emotion = {
         'positive': positive,
@@ -105,11 +116,16 @@ def emotion(corporation):
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/simu/<_id>', methods=['GET'])
-def corp_news_simu(_id):
-    score = simu_cacu.getData(_id)
+@corp_news.route('/corp_news/simu/<_code>/<int:_year>/<int:_month>', methods=['GET'])
+def corp_news_simu(_code, _year, _month):
     res = {}
-    res['status'] = 200
-    res['msg'] = '请求成功'
-    res['data'] = score
+
+    if 2018 <= _year <= 2020 and 1 <= _month <= 12:
+        score = simu_cacu.getData(_code, _year, _month)
+        res['status'] = 200
+        res['msg'] = '请求成功'
+        res['data'] = score
+    else:
+        res['status'] = 200
+        res['data'] = "请求数据错误"
     return jsonify(res)
