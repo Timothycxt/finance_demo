@@ -38,7 +38,7 @@ def info():
 
 # 展示企业信息列表,每页展示10条
 @corp_info.route('/corp_info/page/<industry>/<page>/<pre_page>', methods=['GET'])
-def corp_list(industry,page, pre_page):
+def corp_list(industry, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
 
@@ -113,10 +113,10 @@ def corp_list(industry,page, pre_page):
 
 
 # 根据企业代码查询企业信息,不用分页
-@corp_info.route('/corp_info/item/<code>', methods=['GET'])
-def corp_by_id(code):
+@corp_info.route('/corp_info/item/<NSRSBM>/<NSRMC>/<SSXDM>', methods=['GET'])
+def corp_by_id(NSRSBM, NSRMC, SSXDM):
     total = 1
-    corp_infos = CorpInfo.query.filter(CorpInfo.code == code)
+    corp_infos = CorpInfo.query.filter(CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC)
 
     data = {}
     res = {}
