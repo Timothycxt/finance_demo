@@ -37,16 +37,16 @@ def info():
 
 
 # 展示企业信息列表,每页展示10条
-@corp_info.route('/corp_info/page/<page>/<pre_page>', methods=['GET'])
-def corp_list(page, pre_page):
+@corp_info.route('/corp_info/page/<industry>/<page>/<pre_page>', methods=['GET'])
+def corp_list(industry,page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
 
-    total = CorpInfo.query.count()
+    total = CorpInfo.query.filter(CorpInfo.industry == industry).count()
     start = (page - 1) * pre_page
     end = start + pre_page
     pagination = Pagination(bs_version=3, page=page, total=total)
-    corp_list = CorpInfo.query.slice(start, end)
+    corp_list = CorpInfo.query.filter(CorpInfo.industry == industry).slice(start, end)
 
     items = []
     data = {}
@@ -112,12 +112,11 @@ def corp_list(page, pre_page):
 #     return jsonify(res)
 
 
-# 根据企业id查询企业信息,不用分页
-@corp_info.route('/corp_info/item/<id>', methods=['GET'])
-def corp_by_id(id):
-    id = int(id)
+# 根据企业代码查询企业信息,不用分页
+@corp_info.route('/corp_info/item/<code>', methods=['GET'])
+def corp_by_id(code):
     total = 1
-    corp_infos = CorpInfo.query.filter(CorpInfo.id == id)
+    corp_infos = CorpInfo.query.filter(CorpInfo.code == code)
 
     data = {}
     res = {}
