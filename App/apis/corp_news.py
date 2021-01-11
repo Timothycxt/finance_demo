@@ -116,12 +116,12 @@ def emotion(code):
     return jsonify(res)
 
 
-@corp_news.route('/corp_news/simu/<_code>/<int:_year>/<int:_month>', methods=['GET'])
-def corp_news_simu(_code, _year, _month):
+@corp_news.route('/corp_news/simu/<NSRSBM>/<NSRMC>/<SSXDM>/<int:_year>/<int:_month>', methods=['GET'])
+def corp_news_simu(NSRSBM, NSRMC, SSXDM, _year, _month):
     res = {}
 
     if 2018 <= _year <= 2020 and 1 <= _month <= 12:
-        score = simu_cacu.getData(_code, _year, _month)
+        score = simu_cacu.getData(NSRSBM, NSRMC, SSXDM, _year, _month)
         res['status'] = 200
         res['msg'] = '请求成功'
         res['data'] = score
