@@ -29,9 +29,9 @@ class DevelopConfig(Config):
     dbinfo = {
         "ENGINE": "mysql",
         "DRIVER": "pymysql",
-        "USERNAME": "root",
-        "PASSWORD": "nc970728",
-        "HOST": "10.147.17.138",
+        "USERNAME": "902server",
+        "PASSWORD": "902server",
+        "HOST": "10.147.17.215",
         "PORT": "3306",
         "NAME": "finance"
     }
