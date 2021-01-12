@@ -26,13 +26,23 @@ class Config:
 class DevelopConfig(Config):
     DEBUG = True
 
+    # dbinfo = {
+    #     "ENGINE": "mysql",
+    #     "DRIVER": "pymysql",
+    #     "USERNAME": "902server",
+    #     "PASSWORD": "902server",
+    #     "HOST": "10.147.17.215",
+    #     "PORT": "3306",
+    #     "NAME": "finance"
+    # }
+
     dbinfo = {
-        "ENGINE": "mysql",
-        "DRIVER": "pymysql",
-        "USERNAME": "902server",
-        "PASSWORD": "902server",
+        "ENGINE": "postgresql",
+        "DRIVER": "psycopg2",
+        "USERNAME": "postgres",
+        "PASSWORD": "password",
         "HOST": "10.147.17.215",
-        "PORT": "3306",
+        "PORT": "54321",
         "NAME": "finance"
     }
 
