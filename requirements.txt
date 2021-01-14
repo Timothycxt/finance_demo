@@ -9,3 +9,4 @@ gensim
 flask_cors
 flask_paginate
 PyYaml
+pandas
