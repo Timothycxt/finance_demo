@@ -1,6 +1,16 @@
 import os
 
+from App.utils.config_helper import get_config_map
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+config_map = get_config_map()
+
+class Config:
+    DEBUG = False
+    # TESTING = False
+    # PRODUCT = False
+    SQLALCHEMY_DATABASE_URI = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 def get_db_uri(dbinfo):
@@ -14,77 +24,58 @@ def get_db_uri(dbinfo):
     return "{}+{}://{}:{}@{}:{}/{}".format(engine, drive, username, password, host, port, name)
 
 
-class Config:
-    DEBUG = False
-    TESTING = False
-    PRODUCT = False
-    SQLALCHEMY_DATABASE_URI = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-
 # 开发环境配置
 class DevelopConfig(Config):
     DEBUG = True
-
-    # dbinfo = {
-    #     "ENGINE": "mysql",
-    #     "DRIVER": "pymysql",
-    #     "USERNAME": "902server",
-    #     "PASSWORD": "902server",
-    #     "HOST": "10.147.17.215",
-    #     "PORT": "3306",
-    #     "NAME": "finance"
-    # }
-
     dbinfo = {
         "ENGINE": "postgresql",
         "DRIVER": "psycopg2",
-        "USERNAME": "postgres",
-        "PASSWORD": "password",
-        "HOST": "10.147.17.215",
-        "PORT": "54321",
-        "NAME": "finance"
+        "USERNAME": config_map['postgresql']['username'],
+        "PASSWORD": config_map['postgresql']['password'],
+        "HOST": config_map['postgresql']['host'],
+        "PORT": config_map['postgresql']['port'],
+        "NAME": config_map['postgresql']['database']
     }
 
     SQLALCHEMY_DATABASE_URI = get_db_uri(dbinfo)
 
 
-class TestConfig(Config):
-    TESTING = True
-
-    dbinfo = {
-        "ENGINE": "mysql",
-        "DRIVER": "pymysql",
-        "USERNAME": "root",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "3306",
-        "NAME": "flask_demo"
-    }
-
-    SQLALCHEMY_DATABASE_URI = get_db_uri(dbinfo)
+# class TestConfig(Config):
+#     TESTING = True
+#
+#     dbinfo = {
+#         "ENGINE": "mysql",
+#         "DRIVER": "pymysql",
+#         "USERNAME": "root",
+#         "PASSWORD": "",
+#         "HOST": "localhost",
+#         "PORT": "3306",
+#         "NAME": "flask_demo"
+#     }
+#
+#     SQLALCHEMY_DATABASE_URI = get_db_uri(dbinfo)
 
 
 # 生产环境配置
-class ProductConfig(Config):
-    PRODUCT = True
-
-    dbinfo = {
-        "ENGINE": "mysql",
-        "DRIVER": "pymysql",
-        "USERNAME": "root",
-        "PASSWORD": "",
-        "HOST": "192.168.0.106",
-        "PORT": "3306",
-        "NAME": "flask_demo"
-    }
-
-    SQLALCHEMY_DATABASE_URI = get_db_uri(dbinfo)
+# class ProductConfig(Config):
+#     PRODUCT = True
+#
+#     dbinfo = {
+#         "ENGINE": "mysql",
+#         "DRIVER": "pymysql",
+#         "USERNAME": "root",
+#         "PASSWORD": "",
+#         "HOST": "192.168.0.106",
+#         "PORT": "3306",
+#         "NAME": "flask_demo"
+#     }
+#
+#     SQLALCHEMY_DATABASE_URI = get_db_uri(dbinfo)
 
 
 envs = {
     "develop": DevelopConfig,
-    "testing": TestConfig,
-    "pruduct": ProductConfig,
-    "default": DevelopConfig
+    # "testing": TestConfig,
+    # "pruduct": ProductConfig,
+    # "default": DevelopConfig
 }
