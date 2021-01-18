@@ -58,11 +58,14 @@ def create_edges(graph):
 
 
 if __name__ == "__main__":
-    print('知识图谱正在生成...')
-    url = 'http://{}:{}'.format(sys.argv[1],sys.argv[2])
-    user = sys.argv[3]
-    password = sys.argv[4]
-    graph = Graph(url, auth=(user,password))
-    create_nodes(graph)
-    create_edges(graph)
-    print('知识图谱已生成...')
+    if len(sys.argv) == 4:
+        print('知识图谱正在生成...')
+        url = 'http://{}:{}'.format(sys.argv[1],sys.argv[2])
+        user = sys.argv[3]
+        password = sys.argv[4]
+        graph = Graph(url, auth=(user,password))
+        create_nodes(graph)
+        create_edges(graph)
+        print('知识图谱已生成...')
+    else:
+        print('参数不正确')

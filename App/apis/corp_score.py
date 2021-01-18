@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify
 
-from App.models import simu_cacu
-from App.models.corp_score import Corp_score
+from App.service import simu_cacu
 
 corp_score = Blueprint('corp_score', __name__)
 

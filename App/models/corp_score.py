@@ -1,6 +1,12 @@
 from App.extensions import db
+from App.utils.config_helper import get_config_map
+
+config_map = get_config_map()
 
 class Corp_score(db.Model):
+    __table_args__ = {
+        'schema': config_map['postgresql']['schema']
+    }
     code = db.Column(db.String(255), primary_key=True)
     score = db.Column(db.String(2048))
 

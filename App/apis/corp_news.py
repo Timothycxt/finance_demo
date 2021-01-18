@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify
-from sqlalchemy import and_
 
-from App.models import simu_cacu
-from flask_paginate import Pagination, request, get_page_parameter
+from App.service import simu_cacu
+from flask_paginate import Pagination
 
 from App.models.corp_info import CorpInfo
 from App.models.corp_news import CorpNews

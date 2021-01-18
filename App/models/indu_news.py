@@ -1,16 +1,23 @@
 from App.extensions import db
+from App.utils.config_helper import get_config_map
+
+config_map = get_config_map()
+
 
 class Indu_news(db.Model):
-    id=db.Column(db.Integer,primary_key=True)
-    title=db.Column(db.String(256))
-    source=db.Column(db.String(128))
-    content=db.Column(db.Text)
-    link=db.Column(db.String(2048))
-    publish_date=db.Column(db.DateTime)
-    industy=db.Column(db.String(256))
-    keywords=db.Column(db.String(2048))
-    create_date=db.Column(db.DateTime)
-    create_by=db.Column(db.Integer)
+    __table_args__ = {
+        'schema': config_map['postgresql']['schema']
+    }
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(256))
+    source = db.Column(db.String(128))
+    content = db.Column(db.Text)
+    link = db.Column(db.String(2048))
+    publish_date = db.Column(db.DateTime)
+    industy = db.Column(db.String(256))
+    keywords = db.Column(db.String(2048))
+    create_date = db.Column(db.DateTime)
+    create_by = db.Column(db.Integer)
     update_date = db.Column(db.DateTime)
     update_by = db.Column(db.DateTime)
 

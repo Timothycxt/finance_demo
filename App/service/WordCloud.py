@@ -24,7 +24,7 @@ def get_keywords(industry):
     print('text length:', len(text))
 
     dirpath = os.path.dirname(os.path.realpath(__file__))
-    STOP_WORDS_FILE_PATH = os.path.join(dirpath, '../models/stopwords.txt')
+    STOP_WORDS_FILE_PATH = os.path.join(dirpath, 'stopwords.txt')
     jieba.analyse.set_stop_words(STOP_WORDS_FILE_PATH)
 
     # 词数统计

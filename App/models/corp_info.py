@@ -1,7 +1,12 @@
 from App.extensions import db
+from App.utils.config_helper import get_config_map
 
+config_map = get_config_map()
 
 class CorpInfo(db.Model):
+    __table_args__ = {
+        'schema': config_map['postgresql']['schema']
+    }
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(256))
     name = db.Column(db.String(256))
