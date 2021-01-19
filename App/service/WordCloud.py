@@ -1,23 +1,21 @@
-from App.dao.MySql.industry_news import get_recent_news
 import jieba.analyse
 import os
-# import pyecharts.options as opts
-# from pyecharts.charts import WordCloud
-# from pyecharts.globals import SymbolType
+from App.models.indu_news import Indu_news
 
 
-# 根据行业最近新闻返回热点词及其词频
-# parameters:
-#   industry: 行业名称
-# returns:
-#     [
-#         # 热点词和词频
-#         {
-#             "name": "生物",
-#             "value": 1.0
-#         },
-#         ...
-#     ]
+def get_recent_news(industry):
+    news = Indu_news.query.filter(Indu_news.industy == industry, Indu_news.content != '').limit(20)
+    rs = []
+    for item in news:
+        data = item.to_json()
+        tmp = data['content']
+        rs.append(tmp)
+    print(f'get {len(rs)} recently news')
+    # for i in rs[:10]:
+    #     print(i)
+    return rs
+
+
 def get_keywords(industry):
     news = get_recent_news(industry)
     text = ' '.join(news)

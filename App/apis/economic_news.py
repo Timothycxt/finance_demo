@@ -2,12 +2,14 @@ from flask import Blueprint
 from flask import jsonify
 from flask_paginate import Pagination
 
+from App.apis.authen import login_required
 from App.models.economic_news import EconomicNews
 
 economic_new = Blueprint('economic_news', __name__)
 
 
 @economic_new.route('/economic_news/page/<page>/<pre_page>', methods=['GET'])
+@login_required
 def economic_news(page, pre_page):
     page = int(page)
     pre_page = int(pre_page)

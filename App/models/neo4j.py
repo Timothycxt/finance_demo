@@ -38,8 +38,6 @@ def get_all_triplets():
 def get_triplets_by_code(code):
     print(f"get {code}'s triplets")
     # rs = [{'target': 'test', 'source': 'test', 'rela': 'test'}]
-
-    # graph = Graph("http://10.147.17.215:7474", auth=("neo4j", "qbneo4j"))
     cyber = f'MATCH (a)<-[b]-(c) WHERE a.code = "{code}" RETURN a.name as target, c.name as source, type(b) as rela'
     relationships = graph.run(cyber)
 
@@ -61,7 +59,6 @@ def get_triplets_by_industry(industry):
     print(f"get {industry}'s triplets")
     # rs = [{'target': 'test', 'source': 'test', 'rela': 'test'}]
 
-    # graph = Graph("http://10.147.17.215:7474", auth=("neo4j", "qbneo4j"))
     # cyber = f'match (a:Industry)-[b]->(c) where a.name = "{industry}" return a.name as source, c.name as target, type(b) as rela'
     cyber = f'match (a:Industry)-[b]->(c)<-[d]-(e) where a.name = "{industry}" return c.name as target, type(d) as rela, e.name as source'
     relationships = graph.run(cyber)
@@ -79,5 +76,5 @@ def get_triplets_by_industry(industry):
     return rs
 
 
-if __name__ == '__main__':
-    get_all_triplets()
+# if __name__ == '__main__':
+#     get_all_triplets()

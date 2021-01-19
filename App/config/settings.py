@@ -7,10 +7,9 @@ config_map = get_config_map()
 
 class Config:
     DEBUG = False
-    # TESTING = False
-    # PRODUCT = False
     SQLALCHEMY_DATABASE_URI = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = config_map['app']['secret_key']
 
 
 def get_db_uri(dbinfo):

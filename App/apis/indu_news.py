@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import jsonify
 from flask_paginate import Pagination
 
+from App.apis.authen import login_required
 from App.models.indu_news import Indu_news
 from App.service.WordCloud import get_keywords
 
@@ -9,6 +10,7 @@ indu_news = Blueprint('indu_news', __name__)
 
 
 @indu_news.route('/indu_news/page/<industry>/<page>/<pre_page>', methods=['GET'])
+@login_required
 def indu_new(industry, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
@@ -66,6 +68,7 @@ def indu_new(industry, page, pre_page):
 #             "status": 200
 #         }
 @indu_news.route('/indu_news/keywords/<industry>', methods=['GET', 'POST'])
+@login_required
 def _get_keywords(industry):
     industry = str(industry).strip()
     print(industry)

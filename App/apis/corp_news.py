@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 
+from App.apis.authen import login_required
 from App.service import simu_cacu
 from flask_paginate import Pagination
 
@@ -11,6 +12,7 @@ corp_news = Blueprint('corp_news', __name__)
 
 # 所有新闻的展示列表,每页10条新闻标题
 @corp_news.route('/corp_news/page/<page>/<pre_page>', methods=['GET'])
+@login_required
 def corp_news_list(page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
@@ -47,6 +49,7 @@ def corp_news_list(page, pre_page):
 
 # 展示一家企业新闻列表,每页10条新闻
 @corp_news.route('/corp_news/page/<NSRSBM>/<NSRMC>/<SSXDM>/<page>/<pre_page>', methods=['GET'])
+@login_required
 def corp_by_name(NSRSBM, NSRMC, SSXDM, page, pre_page):
     page = int(page)
     pre_page = int(pre_page)
@@ -87,6 +90,7 @@ def corp_by_name(NSRSBM, NSRMC, SSXDM, page, pre_page):
 
 # 一家公司的新闻的情感倾向分别之和
 @corp_news.route('/corp_news/emotion/<NSRSBM>/<NSRMC>/<SSXDM>', methods=['GET'])
+@login_required
 def emotion(NSRSBM, NSRMC, SSXDM):
     total = CorpNews.query.outerjoin(CorpInfo, CorpNews.corporation == CorpInfo.name).filter(
         CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC)
@@ -116,9 +120,9 @@ def emotion(NSRSBM, NSRMC, SSXDM):
 
 
 @corp_news.route('/corp_news/simu/<NSRSBM>/<NSRMC>/<SSXDM>/<int:_year>/<int:_month>', methods=['GET'])
+@login_required
 def corp_news_simu(NSRSBM, NSRMC, SSXDM, _year, _month):
     res = {}
-
     if 2018 <= _year <= 2020 and 1 <= _month <= 12:
         score = simu_cacu.getData(NSRSBM, NSRMC, SSXDM, _year, _month)
         res['status'] = 200
