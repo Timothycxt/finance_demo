@@ -41,26 +41,26 @@ def create_edges(graph):
 
         # link legal_person to corporation
         cyber = "MATCH (a:Person {name:'" + row['legal_person'] + "'}), (b:Corporation {name:'" + row[
-            'name'] + "'}) MERGE (a)-[:legal_person]->(b)"
+            'name'] + "'}) MERGE (a)-[:法人]->(b)"
         graph.run(cyber)
         # link industry to corporation
         cyber = "MATCH (a:Industry {name:'" + row['industry'] + "'}), (b:Corporation {name:'" + row[
-            'name'] + "'}) MERGE (a)-[:industry]->(b)"
+            'name'] + "'}) MERGE (a)-[:行业]->(b)"
         graph.run(cyber)
         # link type to corporation
         cyber = "MATCH (a:Type {name:'" + row['type'] + "'}), (b:Corporation {name:'" + row[
-            'name'] + "'}) MERGE (a)-[:type]->(b)"
+            'name'] + "'}) MERGE (a)-[:类型]->(b)"
         graph.run(cyber)
         # link admin_div to corporation
         cyber = "MATCH (a:Admin_div {name:'" + row['admin_div'] + "'}), (b:Corporation {name:'" + row[
-            'name'] + "'}) MERGE (a)-[:admin_div]->(b)"
+            'name'] + "'}) MERGE (a)-[:所属区域]->(b)"
         graph.run(cyber)
 
         for name in row['member'].split(','):
             name = name.strip()
             # link member to corporation
             cyber = "MATCH (a:Person {name:'" + name + "'}), (b:Corporation {name:'" + row[
-                'name'] + "'}) MERGE (a)-[:member]->(b)"
+                'name'] + "'}) MERGE (a)-[:成员]->(b)"
             graph.run(cyber)
 
 

@@ -20,5 +20,5 @@ docker build -t finance .
 ```  
 3\. 运行容器
 ```bash
-docker run -d -p 9003:5000 finance --restart=always
+docker run -d -p 9003:8888 finance --restart=always
 ```
