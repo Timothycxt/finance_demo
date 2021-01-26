@@ -5,15 +5,15 @@ gunicorn:
   port: 8888 # 接口端口
   workers: 5 # 定义同时开启的处理请求的进程数量，根据网站流量适当调整
 postgresql:
-  host: 10.147.17.215
-  port: 54321
+  host: 47.98.186.79
+  port: 6004
   database: postgres
   schema: finance
   username: postgres
   password: password
 neo4j:
-  host: 10.147.17.215
-  port: 7474
+  host: 47.98.186.79
+  port: 6002
   username: neo4j
   password: qbneo4j
 
