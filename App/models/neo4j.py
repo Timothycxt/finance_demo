@@ -19,7 +19,7 @@ graph = Graph(url, auth=(config_map['neo4j']['username'], config_map['neo4j']['p
 #     ]
 def get_all_triplets():
     cyber = 'MATCH (a)-[b]->(c) RETURN a.name as source, c.name as target, type(b) as rela, ' \
-            'id(a)+1 as source_id, id(c)+1 as target_id, id(b)+1 as triplet_id'
+            '"s"+id(a)+1 as source_id, c.code as target_id, id(b)+1 as triplet_id'
     relationships = graph.run(cyber)
 
     rs = []
@@ -40,7 +40,7 @@ def get_triplets_by_code(code):
     print(f"get {code}'s triplets")
     # rs = [{'target': 'test', 'source': 'test', 'rela': 'test'}]
     cyber = f'MATCH (a)<-[b]-(c) WHERE a.code = "{code}" RETURN a.name as target, c.name as source, type(b) as rela, ' \
-            f'id(c)+1 as source_id, id(a)+1 as target_id, id(b)+1 as triplet_id'
+            f'"s"+id(c)+1 as source_id, a.code as target_id, id(b)+1 as triplet_id'
     relationships = graph.run(cyber)
 
     rs = []
@@ -48,7 +48,7 @@ def get_triplets_by_code(code):
     for relation in relationships:
         # print(type(relation), relation.items(), dict(relation.items()))
         item = dict(relation.items())
-        item['code'] = code
+        # item['code'] = code
         rs.append(item)
 
     # print(rs[:10])
@@ -65,7 +65,7 @@ def get_triplets_by_industry(industry):
 
     # cyber = f'match (a:Industry)-[b]->(c) where a.name = "{industry}" return a.name as source, c.name as target, type(b) as rela'
     cyber = f'match (a:Industry)-[b]->(c)<-[d]-(e) where a.name = "{industry}" return c.name as target, type(d) as rela, e.name as source, ' \
-            f'id(e)+1 as source_id, id(c)+1 as target_id, id(d)+1 as triplet_id'
+            f'"s"+id(e)+1 as source_id, c.code as target_id, id(d)+1 as triplet_id'
     relationships = graph.run(cyber)
 
     rs = []
