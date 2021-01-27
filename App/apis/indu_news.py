@@ -34,7 +34,7 @@ def indu_new(industry, page, pre_page):
             'title': tmp['title'],
             'source': tmp['source'],
             'link': tmp['link'],
-            'publishDate': time[0:10],
+            'publishDate': time,
             'industy': tmp['industy']
         }
         items.append(tmp)
