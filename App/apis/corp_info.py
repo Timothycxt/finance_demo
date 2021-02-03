@@ -100,7 +100,7 @@ def corp_list():
 
 # 根据企业代码查询企业信息
 @corp_info.route('/corp_info/item/<NSRSBM>/<NSRMC>/<SSXDM>', methods=['GET'])
-# @login_required
+@login_required
 def corp_by_id(NSRSBM, NSRMC, SSXDM):
     total = 1
     corp_infos = CorpInfo.query.filter(CorpInfo.code == NSRSBM, CorpInfo.name == NSRMC)
