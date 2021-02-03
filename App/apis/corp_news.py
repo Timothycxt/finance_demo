@@ -123,12 +123,13 @@ def emotion(NSRSBM, NSRMC, SSXDM):
 @login_required
 def corp_news_simu(NSRSBM, NSRMC, SSXDM, _year, _month):
     res = {}
-    if 2018 <= _year <= 2020 and 1 <= _month <= 12:
+    if _year <= 0 or _month <= 0 or _month > 12:
+        res['status'] = 4000
+        res['msg'] = "参数不合法"
+        res['data'] = {}
+    else:
         score = simu_cacu.getData(NSRSBM, NSRMC, SSXDM, _year, _month)
         res['status'] = 200
         res['msg'] = '请求成功'
         res['data'] = score
-    else:
-        res['status'] = 200
-        res['data'] = "请求数据错误"
     return jsonify(res)
