@@ -63,6 +63,8 @@ def search_score_by_code(NSRSBM, NSRMC, SSXDM):
     app_context.push()
     _score = Corp_score.query.filter_by(code=NSRSBM).first()
     app_context.pop()
+    if _score == None:
+        return '[]'
     return _score.score
 
 
