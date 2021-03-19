@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e2c05b75-bdad-45a8-b871-8c334e9b01ee" name="Default Changelist" comment="分数接口返回值调整">
+      <change afterPath="$PROJECT_DIR$/App/service/setup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.env.development" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.env.production" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.env.staging" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/README-zh.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/babel.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/jsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/postcss.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/service/simu_cacu.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1mv1gcUUccfqPH4D0H2gMmabD3k" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\PyCharm\finance_demo\App\service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\PyCharm\finance_demo\front" />
+      <recent name="D:\Project\PyCharm\finance_demo" />
+      <recent name="D:\Project\PyCharm\finance_demo\end" />
+      <recent name="D:\Project\PyCharm\finance_demo\App\models" />
+      <recent name="D:\Project\PyCharm\finance_demo\App\service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.manager">
+    <configuration name="config_helper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="finance_demo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/App/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/App/utils/config_helper.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gen_graph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="finance_demo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\Project\PyCharm\finance_demo\end\gen_graph.py" />
+      <option name="PARAMETERS" value="10.147.17.215 7474 neo4j qbneo4j" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="finance_demo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manager.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="finance_demo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\Project\PyCharm\finance_demo\end\manager.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.config_helper" />
+      <item itemvalue="Python.gen_graph" />
+      <item itemvalue="Python.manager" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.manager" />
+        <item itemvalue="Python.manager" />
+        <item itemvalue="Python.gen_graph" />
+        <item itemvalue="Python.config_helper" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2c05b75-bdad-45a8-b871-8c334e9b01ee" name="Default Changelist" comment="" />
+      <created>1610359362512</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610359362512</updated>
+      <workItem from="1610359363843" duration="726000" />
+      <workItem from="1610360351410" duration="8055000" />
+      <workItem from="1610432891731" duration="2676000" />
+      <workItem from="1610584148578" duration="14957000" />
+      <workItem from="1610625449155" duration="6239000" />
+      <workItem from="1610953642476" duration="1388000" />
+      <workItem from="1610958358556" duration="2088000" />
+      <workItem from="1611022839316" duration="7565000" />
+      <workItem from="1611034800095" duration="6042000" />
+      <workItem from="1611200301205" duration="880000" />
+      <workItem from="1611230816001" duration="5740000" />
+      <workItem from="1611636290785" duration="2002000" />
+      <workItem from="1611644421450" duration="2361000" />
+      <workItem from="1611675773651" duration="736000" />
+      <workItem from="1612322210132" duration="2769000" />
+      <workItem from="1612343673223" duration="427000" />
+      <workItem from="1612344119562" duration="1103000" />
+      <workItem from="1616117703837" duration="1792000" />
+    </task>
+    <task id="LOCAL-00001" summary="修改Dockerfile">
+      <created>1610359976475</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610359976475</updated>
+    </task>
+    <task id="LOCAL-00002" summary="修改接口参数">
+      <created>1610370122687</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1610370122687</updated>
+    </task>
+    <task id="LOCAL-00003" summary="修改接口参数">
+      <created>1610370753667</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610370753667</updated>
+    </task>
+    <task id="LOCAL-00004" summary="修改接口参数">
+      <created>1610372312543</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1610372312543</updated>
+    </task>
+    <task id="LOCAL-00005" summary="修改数据库连接postgresql">
+      <created>1610437306459</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1610437306459</updated>
+    </task>
+    <task id="LOCAL-00006" summary="安装psycopg2">
+      <created>1610437882713</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1610437882713</updated>
+    </task>
+    <task id="LOCAL-00007" summary="配置项与代码分离">
+      <created>1610604575242</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1610604575242</updated>
+    </task>
+    <task id="LOCAL-00008" summary="知识图谱生成">
+      <created>1610624621775</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1610624621775</updated>
+    </task>
+    <task id="LOCAL-00009" summary="连接数据库指定schema，指定依赖包版本">
+      <created>1610965598812</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1610965598812</updated>
+    </task>
+    <task id="LOCAL-00010" summary="加入token验证">
+      <created>1611037334760</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611037334760</updated>
+    </task>
+    <task id="LOCAL-00011" summary="调整py2neo版本">
+      <created>1611636809257</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1611636809257</updated>
+    </task>
+    <task id="LOCAL-00012" summary="三元组targetid改为企业编码">
+      <created>1611660042632</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1611660042632</updated>
+    </task>
+    <task id="LOCAL-00013" summary="分数接口返回值调整">
+      <created>1612323794999</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1612323794999</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="修改Dockerfile" />
+    <MESSAGE value="修改接口参数" />
+    <MESSAGE value="修改数据库连接postgresql" />
+    <MESSAGE value="安装psycopg2" />
+    <MESSAGE value="配置项与代码分离" />
+    <MESSAGE value="知识图谱生成" />
+    <MESSAGE value="连接数据库指定schema，指定依赖包版本" />
+    <MESSAGE value="加入token验证" />
+    <MESSAGE value="调整py2neo版本" />
+    <MESSAGE value="三元组targetid改为企业编码" />
+    <MESSAGE value="分数接口返回值调整" />
+    <option name="LAST_COMMIT_MESSAGE" value="分数接口返回值调整" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="dict(relation.items())" language="Python" />
+        <watch expression="_score.score" language="Python" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/finance_demo$config_helper.coverage" NAME="config_helper Coverage Results" MODIFIED="1610603337063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/App/utils" />
+    <SUITE FILE_PATH="coverage/finance_demo$manager__1_.coverage" NAME="manager (1) Coverage Results" MODIFIED="1616129813206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/finance_demo$gen_graph.coverage" NAME="gen_graph Coverage Results" MODIFIED="1611237513467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/finance_demo$manager.coverage" NAME="manager Coverage Results" MODIFIED="1616129794182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
