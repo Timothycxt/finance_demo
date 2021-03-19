@@ -1,0 +1,8 @@
+/.idea/
+/venv/
+/App/__pycache__/
+/.vscode
+*.pyc
+.DS_Store
+/front/node_modules/
+/front/dist/

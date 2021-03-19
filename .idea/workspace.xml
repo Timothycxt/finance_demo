@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e2c05b75-bdad-45a8-b871-8c334e9b01ee" name="Default Changelist" comment="分数接口返回值调整">
-      <change afterPath="$PROJECT_DIR$/App/service/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.env.development" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.env.production" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.env.staging" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.eslintignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.eslintrc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/README-zh.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/babel.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/jest.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/jsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/nginx.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/postcss.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/service/simu_cacu.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" />
+    <list default="true" id="e2c05b75-bdad-45a8-b871-8c334e9b01ee" name="Default Changelist" comment="前端代码">
+      <change beforePath="$PROJECT_DIR$/front/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/LICENSE" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,8 +48,8 @@
       <recent name="D:\Project\PyCharm\finance_demo\App\service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Project\PyCharm\finance_demo\front" />
       <recent name="D:\Project\PyCharm\finance_demo" />
+      <recent name="D:\Project\PyCharm\finance_demo\front" />
       <recent name="D:\Project\PyCharm\finance_demo\end" />
       <recent name="D:\Project\PyCharm\finance_demo\App\models" />
       <recent name="D:\Project\PyCharm\finance_demo\App\service" />
@@ -202,7 +183,7 @@
       <workItem from="1612322210132" duration="2769000" />
       <workItem from="1612343673223" duration="427000" />
       <workItem from="1612344119562" duration="1103000" />
-      <workItem from="1616117703837" duration="1792000" />
+      <workItem from="1616117703837" duration="2151000" />
     </task>
     <task id="LOCAL-00001" summary="修改Dockerfile">
       <created>1610359976475</created>
@@ -295,7 +276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612323794999</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="前端代码">
+      <created>1616130102532</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1616130102532</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,7 +313,8 @@
     <MESSAGE value="调整py2neo版本" />
     <MESSAGE value="三元组targetid改为企业编码" />
     <MESSAGE value="分数接口返回值调整" />
-    <option name="LAST_COMMIT_MESSAGE" value="分数接口返回值调整" />
+    <MESSAGE value="前端代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="前端代码" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -346,7 +335,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/finance_demo$config_helper.coverage" NAME="config_helper Coverage Results" MODIFIED="1610603337063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/App/utils" />
-    <SUITE FILE_PATH="coverage/finance_demo$manager__1_.coverage" NAME="manager (1) Coverage Results" MODIFIED="1616129813206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/finance_demo$manager__1_.coverage" NAME="manager Coverage Results" MODIFIED="1616129830322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/finance_demo$gen_graph.coverage" NAME="gen_graph Coverage Results" MODIFIED="1611237513467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/finance_demo$manager.coverage" NAME="manager Coverage Results" MODIFIED="1616129794182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
